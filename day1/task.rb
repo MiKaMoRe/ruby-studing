@@ -104,16 +104,3 @@ class Route
     [@start, @intermediate, @stop].flatten
   end
 end
-
-# stations = []
-# routes = []
-# trains = []
-# stations.push(Station.new('Тверь'))
-# stations.push(Station.new('Беломорская'))
-# stations.push(Station.new('Химки'))
-# stations.push(Station.new('Ярославский вокзал'))
-# routes.push(Route.new(stations[0], stations[stations.length - 1]))
-# routes[0].add_station(stations[1])
-# routes[0].add_station(stations[2])
-# trains.push(Train.new(0, 'Грузовой', 10))
-# trains[0].route = (routes[0])
