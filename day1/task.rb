@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This is a class for create a station. His require station name.
+# This is a class for create a station. He is require station name.
 class Station
   attr_reader :name, :trains
 
@@ -59,7 +59,7 @@ class Train
   end
 
   def move_next
-    return if route_progress != @route.stations.length - 1
+    return if route_progress == @route.stations.length - 1
 
     @route.stations[route_progress + 1].add_train(self)
     current_station.remove_train(self)
@@ -74,15 +74,19 @@ class Train
   end
 
   def next_station
+    return if route_progress == @route.stations.length - 1
+
     @route.stations[route_progress + 1]
   end
 
   def prev_station
+    return if route_progress.zero?
+
     @route.stations[route_progress - 1]
   end
 end
 
-# This is a class for rout. He is require beginning and end station.
+# This is a class for route. He is require beginning and end station.
 class Route
   attr_reader :start
 
