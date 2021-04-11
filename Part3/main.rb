@@ -10,6 +10,7 @@ require_relative 'station'
 ##
 # This is a main program object
 # He's show program interface and unlock
+# Вся работа с методами в разделе private происходит через метод interface
 class Main
   def initialize
     @stations = []

@@ -3,6 +3,7 @@
 ##
 # This is a rout
 # He's require number
+# Метод route_progress используется только для исравной работы других методов этого класса
 class Train
   attr_reader :cars, :route, :speed, :number
 
