@@ -6,7 +6,10 @@ require_relative 'train'
 # This is a passenger train
 # Inherited from train
 class PassengerTrain < Train
-  def add_car(car)
-    return @cars << car if car.instance_of? PassengerCar
+  attr_reader :type
+
+  def initialize(number)
+    super(number)
+    @type = 'passenger'
   end
 end

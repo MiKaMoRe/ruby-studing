@@ -23,7 +23,7 @@ class Train
   end
 
   def add_car(car)
-    @cars << car
+    @cars << car if car.type == @type
   end
 
   def remove_car
