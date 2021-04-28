@@ -21,7 +21,7 @@ class Main
   end
 
   def interface
-    while true
+    loop do
       system('clear')
       start_commands
       case gets.chomp
@@ -142,7 +142,7 @@ class Main
   end
 
   def control_stations
-    while true
+    loop do
       station = @stations[choose_station]
       system('clear')
       puts '1. Показать все поезда на станции'
@@ -161,7 +161,7 @@ class Main
   end
 
   def control_routes
-    while true
+    loop do
       route = @routes[choose_route]
       system('clear')
       puts '1. Добавить станцию'
@@ -187,7 +187,7 @@ class Main
   end
 
   def control_trains
-    while true
+    loop do
       train = @trains[choose_train]
       # system('clear')
       puts '1. Установить маршрут поезда'

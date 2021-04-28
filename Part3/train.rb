@@ -1,16 +1,31 @@
 # frozen_string_literal: true
 
+require_relative 'company'
+require_relative 'instanse_counter'
+
 ##
 # This is a rout
 # He's require number
 # Метод route_progress используется только для исравной работы других методов этого класса
 class Train
+  # include InstanseCounter
+  include Company
+
   attr_reader :cars, :route, :speed, :number
+  
+  @counter = 0
+  @@instances = []
+
+  def self.find(num)
+    @@instances.find {|train| train.number == num}
+  end
 
   def initialize(number)
     @number = number
     @cars = []
     @speed = 0
+    @@instances.push(self)
+    # register_instance
   end
 
   def route=(route)

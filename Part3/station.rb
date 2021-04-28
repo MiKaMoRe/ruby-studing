@@ -4,11 +4,21 @@
 # This is a station
 # He's require name
 class Station
+  # include InstanseCounter
+
   attr_reader :name, :trains
+
+  @@instances = []
+  
+  def self.all
+    @@instances
+  end
 
   def initialize(name)
     @name = name
     @trains = []
+    @@instances.push(self)
+    # register_instance
   end
 
   def add_train(train)
