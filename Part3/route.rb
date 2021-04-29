@@ -4,7 +4,7 @@
 # This is a rout
 # He's require start and end station objects
 class Route
-  # include InstanseCounter
+  include InstanseCounter
 
   attr_reader :start, :stop
 
@@ -12,7 +12,7 @@ class Route
     @start = start
     @stop = stop
     @intermediate = []
-    # register_instance
+    register_instance
   end
 
   def add_station(station)

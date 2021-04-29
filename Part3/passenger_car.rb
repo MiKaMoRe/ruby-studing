@@ -7,7 +7,7 @@ require_relative 'car'
 # Inherited from car
 class PassengerCar < Car
   attr_reader :type
-  
+
   def initialize
     @type = 'passenger'
   end

@@ -8,16 +8,15 @@ require_relative 'instanse_counter'
 # He's require number
 # Метод route_progress используется только для исравной работы других методов этого класса
 class Train
-  # include InstanseCounter
+  include InstanseCounter
   include Company
 
   attr_reader :cars, :route, :speed, :number
-  
-  @counter = 0
+
   @@instances = []
 
   def self.find(num)
-    @@instances.find {|train| train.number == num}
+    @@instances.find { |train| train.number == num }
   end
 
   def initialize(number)
@@ -25,7 +24,7 @@ class Train
     @cars = []
     @speed = 0
     @@instances.push(self)
-    # register_instance
+    register_instance
   end
 
   def route=(route)
