@@ -53,7 +53,7 @@ class Main
   def seed
     @stations << Station.new('Khimki')
     @stations << Station.new('Yaroslavskiy vokzal')
-    @trains << PassengerTrain.new(101)
+    @trains << PassengerTrain.new('101')
     @routes << Route.new(@stations[0], @stations[1])
   end
 
@@ -97,6 +97,9 @@ class Main
       @trains << PassengerTrain.new(number)
     end
     puts "Создан поезд: №#{number} #{@trains[@trains.length - 1].class}"
+    continue
+  rescue Exception => e
+    puts "Error: #{e.message}"
     continue
   end
 

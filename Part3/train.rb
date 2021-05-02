@@ -20,10 +20,11 @@ class Train
   end
 
   def initialize(number)
-    @number = number
+    @number = number.to_s
     @cars = []
     @speed = 0
     @@instances.push(self)
+    validate!
     register_instance
   end
 
@@ -91,5 +92,17 @@ class Train
 
   def route_progress
     @route.stations.index(current_station)
+  end
+  
+  def validate!
+    raise 'Train number cant be nil' if @number.nil?
+    raise 'Incorrect train number format' if @number !~ /(^[a-zа-я0-9]{3}$|^[a-zа-я0-9]{3}-[a-zа-я0-9]{2}$)/i
+  end
+
+  def valid?
+    validate!
+    true
+  rescue
+    false
   end
 end

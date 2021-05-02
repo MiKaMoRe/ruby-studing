@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'instanse_counter'
+
 ##
 # This is a station
 # He's require name
@@ -18,6 +20,7 @@ class Station
     @name = name
     @trains = []
     @@instances.push(self)
+    validate!
     register_instance
   end
 
@@ -31,5 +34,12 @@ class Station
 
   def remove_train(train)
     @trains.delete(train)
+  end
+
+  protected
+
+  def validate!
+    raise 'Station name cant be nil' if @name.nil?
+    raise 'Station name can contain only any word characters and whitespaces' if @name !~ /[a-zа-я ]/i
   end
 end

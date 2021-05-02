@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'instanse_counter'
+
 ##
 # This is a rout
 # He's require start and end station objects
@@ -13,6 +15,7 @@ class Route
     @stop = stop
     @intermediate = []
     register_instance
+    validate!
   end
 
   def add_station(station)
@@ -25,5 +28,11 @@ class Route
 
   def stations
     [@start, @intermediate, @stop].flatten
+  end
+
+  protected
+
+  def validate!
+    raise 'Route can only contain an instance of Station class' if !(@start.is_a? Station) or !(@stop.is_a? Station)
   end
 end
