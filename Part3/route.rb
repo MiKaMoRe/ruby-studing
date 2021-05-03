@@ -14,8 +14,8 @@ class Route
     @start = start
     @stop = stop
     @intermediate = []
-    register_instance
     validate!
+    register_instance
   end
 
   def add_station(station)
@@ -33,6 +33,6 @@ class Route
   protected
 
   def validate!
-    raise 'Route can only contain an instance of Station class' if !(@start.is_a? Station) or !(@stop.is_a? Station)
+    raise 'Route can only contain an instance of Station class' if !(@start.is_a? Station) || !(@stop.is_a? Station)
   end
 end

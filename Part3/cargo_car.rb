@@ -8,7 +8,13 @@ require_relative 'car'
 class CargoCar < Car
   attr_reader :type
 
-  def initialize
+  def initialize(capacity)
+    super(capacity)
     @type = 'cargo'
+  end
+
+  def fill_tank(lvl)
+    @fill ||= 0
+    return @fill += lvl if @capacity >= @fill + lvl
   end
 end

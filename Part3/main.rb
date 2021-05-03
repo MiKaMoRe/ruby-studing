@@ -199,7 +199,7 @@ class Main
       puts '4. Перемемстить на станцию вперёд'
       puts '5. Перемемстить на станцию назад'
       puts '6. Текущая станция'
-      puts '7. Количество вагонов'
+      puts '7. Управление вагонами'
       puts 'exit. Назад в меню'
       case gets.chomp
       when '1'
@@ -217,7 +217,45 @@ class Main
         puts train.current_station.name
         continue
       when '7'
-        puts train.cars.length
+        control_cars(train)
+        continue
+      when 'exit'
+        break
+      else
+        puts 'Неизвестная команда'
+        continue
+      end
+    end
+  end
+
+  def control_cars(train)
+    loop do
+      puts 'Выберите вагон'
+      show_cars(train)
+      car = train.cars[gets.chomp.to_i]
+      if train.type == 'passenger'
+        puts '1. Добавить пассажира'
+        puts '2. Свободные места'
+        puts '3. Занятые места'
+      else train.type == 'cargo'
+        puts '1. Загрузить вагон'
+        puts '2. Свободное место'
+        puts '3. Заполненность'
+      end
+      puts 'exit. Выйти из управления вагоном'
+      case gets.chomp
+      when '1'
+        if train.type == 'passenger'
+          car.new_passenger
+        else train.type == 'cargo'
+          puts 'Укажите объем заполнения'
+          car.fill_tank(gets.chomp.to_i)
+        end
+      when '2'
+        puts car.free_lvl
+        continue
+      when '3'
+        puts car.filling_lvl
         continue
       when 'exit'
         break
@@ -229,8 +267,26 @@ class Main
   end
 
   def define_car(train)
-    return PassengerCar.new if train.type == 'passenger'
-    return CargoCar.new if train.type == 'cargo'
+    if train.type == 'passenger'
+      puts 'Введите количество мест в вагоне'
+      capacity = gets.chomp.to_i
+      return PassengerCar.new(capacity)
+    else train.type == 'cargo'
+      puts 'Введите вместимость грузового вагона'
+      capacity = gets.chomp.to_i
+      return CargoCar.new(capacity)
+    end
+  end
+
+  def show_cars(train)
+    puts "Вагоны для поезда: #{train.number}. #{train.class}"
+    train.cars.each_with_index do |car, index|
+      puts "#{index}. Тип вагона: #{car.type}."
+      puts "Вместимость: #{car.capacity}"
+      puts "Свободные места: #{car.free_lvl}"
+      puts "Занятые места: #{car.filling_lvl}"
+      puts '__________________________________________'
+    end
   end
 
   def show_trains(trains = @trains)
