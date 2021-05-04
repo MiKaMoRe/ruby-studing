@@ -4,7 +4,7 @@
 # This is a car
 class Car
   attr_reader :capacity
-  
+
   def initialize(capacity)
     @capacity = capacity
   end

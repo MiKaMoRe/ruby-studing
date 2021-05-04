@@ -36,6 +36,15 @@ class Station
     @trains.delete(train)
   end
 
+  def each_train(&block)
+    case block.parameters.length
+    when 1
+      @trains.each { |trains| block.call(trains) }
+    when 2
+      @trains.each_with_index { |trains, index| block.call(trains, index) }
+    end
+  end
+
   protected
 
   def validate!

@@ -152,7 +152,7 @@ class Main
       puts 'exit. Назад в меню'
       case gets.chomp
       when '1'
-        show_trains(station.trains)
+        show_stations_trains(station)
         continue
       when 'exit'
         break
@@ -237,7 +237,8 @@ class Main
         puts '1. Добавить пассажира'
         puts '2. Свободные места'
         puts '3. Занятые места'
-      else train.type == 'cargo'
+      else
+        train.type == 'cargo'
         puts '1. Загрузить вагон'
         puts '2. Свободное место'
         puts '3. Заполненность'
@@ -247,7 +248,8 @@ class Main
       when '1'
         if train.type == 'passenger'
           car.new_passenger
-        else train.type == 'cargo'
+        else
+          train.type == 'cargo'
           puts 'Укажите объем заполнения'
           car.fill_tank(gets.chomp.to_i)
         end
@@ -270,17 +272,18 @@ class Main
     if train.type == 'passenger'
       puts 'Введите количество мест в вагоне'
       capacity = gets.chomp.to_i
-      return PassengerCar.new(capacity)
-    else train.type == 'cargo'
+      PassengerCar.new(capacity)
+    else
+      train.type == 'cargo'
       puts 'Введите вместимость грузового вагона'
       capacity = gets.chomp.to_i
-      return CargoCar.new(capacity)
+      CargoCar.new(capacity)
     end
   end
 
   def show_cars(train)
     puts "Вагоны для поезда: #{train.number}. #{train.class}"
-    train.cars.each_with_index do |car, index|
+    train.each_car do |car, index|
       puts "#{index}. Тип вагона: #{car.type}."
       puts "Вместимость: #{car.capacity}"
       puts "Свободные места: #{car.free_lvl}"
@@ -289,8 +292,12 @@ class Main
     end
   end
 
-  def show_trains(trains = @trains)
-    trains.each_with_index { |train, index| puts "#{index}. #{train.number} #{train.class}" }
+  def show_trains
+    @trains.each_with_index { |train, index| puts "#{index}. #{train.number} #{train.class}" }
+  end
+
+  def show_stations_trains(station)
+    station.each_train { |train, index| puts "#{index}. #{train.number} #{train.class}" }
   end
 
   def show_stations

@@ -88,12 +88,21 @@ class Train
     instance_of? CargoTrain
   end
 
+  def each_car(&block)
+    case block.parameters.length
+    when 1
+      @cars.each { |car| block.call(car) }
+    when 2
+      @cars.each_with_index { |car, index| block.call(car, index) }
+    end
+  end
+
   protected
 
   def route_progress
     @route.stations.index(current_station)
   end
-  
+
   def validate!
     raise 'Train number cant be nil' if @number.nil?
     raise 'Incorrect train number format' if @number !~ /(^[a-zа-я0-9]{3}$|^[a-zа-я0-9]{3}-[a-zа-я0-9]{2}$)/i
@@ -102,7 +111,7 @@ class Train
   def valid?
     validate!
     true
-  rescue
+  rescue StandardError
     false
   end
 end
