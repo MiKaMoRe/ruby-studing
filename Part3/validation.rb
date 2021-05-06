@@ -22,13 +22,16 @@ module Validation
       return if self.class.validates.nil?
 
       self.class.validates.each do |validate|
-        case validate['type']
+        name = instance_variable_get("@#{validate['name']}".to_sym)
+        param = instance_variable_get("@#{validate['param']}".to_sym)
+        type = validate['type']
+        case type
         when :format
-          eval("raise 'Incorrect format' if @#{validate['name']} !~ validate['param']")
+          raise 'Incorrect format' if name !~ param
         when :presence
-          eval("raise 'Value cant be empty' if @#{validate['name']}.nil?")
+          raise 'Value cant be empty' if name.nil?
         when :type
-          eval("raise 'Different class' if @#{validate['name']}.class != validate['param']")
+          raise 'Different class' if name.class != param
         else
           raise 'Undefined type for validate'
         end
