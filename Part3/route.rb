@@ -1,14 +1,19 @@
 # frozen_string_literal: true
 
 require_relative 'instanse_counter'
+require_relative 'validation'
 
 ##
 # This is a rout
 # He's require start and end station objects
 class Route
-  include InstanseCounter
+  include InstanceCounter
+  include Validation
 
   attr_reader :start, :stop
+
+  validate :start, :type, Station
+  validate :stop, :type, Station
 
   def initialize(start, stop)
     @start = start

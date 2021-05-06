@@ -2,16 +2,23 @@
 
 require_relative 'company'
 require_relative 'instanse_counter'
+require_relative 'accessors'
+require_relative 'validation'
 
 ##
 # This is a rout
 # He's require number
 # Метод route_progress используется только для исравной работы других методов этого класса
 class Train
-  include InstanseCounter
+  include InstanceCounter
+  include Accessors
   include Company
+  include Validation
 
   attr_reader :cars, :route, :speed, :number
+
+  validate :number, :presence
+  validate :number, :format, /(^[a-zа-я0-9]{3}$|^[a-zа-я0-9]{3}-[a-zа-я0-9]{2}$)/i
 
   @@instances = []
 
@@ -101,17 +108,5 @@ class Train
 
   def route_progress
     @route.stations.index(current_station)
-  end
-
-  def validate!
-    raise 'Train number cant be nil' if @number.nil?
-    raise 'Incorrect train number format' if @number !~ /(^[a-zа-я0-9]{3}$|^[a-zа-я0-9]{3}-[a-zа-я0-9]{2}$)/i
-  end
-
-  def valid?
-    validate!
-    true
-  rescue StandardError
-    false
   end
 end

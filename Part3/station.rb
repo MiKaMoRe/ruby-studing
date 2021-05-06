@@ -1,14 +1,19 @@
 # frozen_string_literal: true
 
 require_relative 'instanse_counter'
+require_relative 'validation'
 
 ##
 # This is a station
 # He's require name
 class Station
-  include InstanseCounter
+  include InstanceCounter
+  include Validation
 
   attr_reader :name, :trains
+
+  validate :name, :presence
+  validate :name, :format, /^[a-zа-я ]+$/i
 
   @@instances = []
 
@@ -43,12 +48,5 @@ class Station
     when 2
       @trains.each_with_index { |trains, index| block.call(trains, index) }
     end
-  end
-
-  protected
-
-  def validate!
-    raise 'Station name cant be nil' if @name.nil?
-    raise 'Station name can contain only any word characters and whitespaces' if @name !~ /[a-zа-я ]/i
   end
 end
