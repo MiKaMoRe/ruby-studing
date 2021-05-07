@@ -23,24 +23,15 @@ module Validation
 
       self.class.validates.each do |validate|
         name = instance_variable_get("@#{validate['name']}".to_sym)
-        param = instance_variable_get("@#{validate['param']}".to_sym)
+        param = validate['param']
         type = validate['type']
-        case type
-        when :format
-          validate_format(name, param)
-        when :presence
-          validate_presence(name)
-        when :type
-          validate_type(name)
-        else
-          raise 'Undefined type for validate'
-        end
+        self.send "validate_#{type}".to_sym, name, param
       end
     end
     def validate_format(name, param)
       raise 'Incorrect format' if name !~ param
     end
-    def validate_presence(name)
+    def validate_presence(name, param)
       raise 'Value cant be empty' if name.nil?
     end
     def validate_type(name, param)
