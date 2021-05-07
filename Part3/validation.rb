@@ -27,15 +27,24 @@ module Validation
         type = validate['type']
         case type
         when :format
-          raise 'Incorrect format' if name !~ param
+          validate_format(name, param)
         when :presence
-          raise 'Value cant be empty' if name.nil?
+          validate_presence(name)
         when :type
-          raise 'Different class' if name.class != param
+          validate_type(name)
         else
           raise 'Undefined type for validate'
         end
       end
+    end
+    def validate_format(name, param)
+      raise 'Incorrect format' if name !~ param
+    end
+    def validate_presence(name)
+      raise 'Value cant be empty' if name.nil?
+    end
+    def validate_type(name, param)
+      raise 'Different class' if name.class != param
     end
 
     def valid?
